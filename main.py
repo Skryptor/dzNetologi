@@ -27,9 +27,6 @@ class Student:
         Averaga = all_grades / i
         return round(Averaga, 1)
 
-    def average_all_grades(self):
-        total_grades = sum(self.grades.values())
-
     def __str__(self):
         return (F'Студенты \n'
                 F'Имя: {self.name}'
@@ -91,15 +88,38 @@ class StudentVsLecturer:
         average_lecturer = self.lecturer.calculate_grades()
 
         if average_student > average_lecturer:
-            return 'Средняя оценка лекторов серьезнее'
+            return 'Средняя оценка лекторов серьезнее чем у студентов!'
         elif average_student < average_lecturer:
-            return 'Средняя оценка студентов серьезнее'
+            return 'Средняя оценка студентов серьезнее чем у лекторов!'
         else:
-            return 'Все серьезные молодцы'
+            return 'Все серьезные молодцы!'
 
     def __str__(self):
         return self.vs()
 
+class All_Average_Grades:
+    def __init__(self,students):
+        self.students = students
+
+    def all_grades_student(self):
+        all_grades = 0
+        i = 0
+        for student in self.students:
+            if isinstance(student, Student):
+                for grades in student.grades.values():
+                    all_grades += sum(grades)
+                    i += len(grades)
+            elif isinstance(student, Lecturer):
+                for grades in student.grades_Fstudent.values():
+                    all_grades += sum(grades)
+                    i += len(grades)
+        if i == 0:
+            return 0
+        Averaga = all_grades / i
+        return round(Averaga, 1)
+
+    def __str__(self):
+        return f'Среднее значением по всем студентам: {self.all_grades_student()}'
 
 
 best_student = Student('Ema', 'Stoun', 'Woman')
@@ -138,10 +158,17 @@ super_reviewer.rate_hw(super_student,'Python', 12 )
 super_reviewer.rate_hw(super_student,'Python', 11 )
 super_reviewer.rate_hw(super_student,'Python', 10 )
 
-Versus = StudentVsLecturer(super_student,super_lecturer)
+Versus2 = StudentVsLecturer(super_student,super_lecturer)
+Versus1 = StudentVsLecturer(best_student,cool_lecturer)
 
+ALl_Grade_Student = All_Average_Grades([super_student,best_student])
+ALl_Grade_Lecturer = All_Average_Grades([cool_lecturer,super_lecturer])
 
 #print (cool_reviewer,cool_lecturer,
 #        best_student,super_reviewer,
 #        super_student,super_lecturer)
-#        print(versus)
+
+print (Versus2)
+print (Versus1)
+print (ALl_Grade_Student)
+print (ALl_Grade_Lecturer)
