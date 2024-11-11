@@ -83,16 +83,25 @@ class StudentVsLecturer:
         self.student = student
         self.lecturer = lecturer
 
+    def __eq__(self, vs):
+        return self.student == vs.student and self.lecturer == vs.lecturer
+
+    def __gt__(self, vs):
+        return self.student > vs.student
+
+    def __lt__(self, vs):
+        return self.student < vs.student
+
     def vs(self):
         average_student = self.student.calculate_grades()
         average_lecturer = self.lecturer.calculate_grades()
 
         if average_student > average_lecturer:
-            return 'Средняя оценка лекторов серьезнее чем у студентов!'
+            return 'Средняя оценка студентов выше, чем у лекторов!'
         elif average_student < average_lecturer:
-            return 'Средняя оценка студентов серьезнее чем у лекторов!'
+            return 'Средняя оценка лекторов выше, чем у студентов!'
         else:
-            return 'Все серьезные молодцы!'
+            return 'Все молодцы, оценки одинаковые, но Дима лучший молодец!'
 
     def __str__(self):
         return self.vs()
